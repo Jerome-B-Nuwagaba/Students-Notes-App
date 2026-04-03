@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+    <!-- Notes Section -->
+    <div class="bg-white p-6 rounded-xl shadow-md">
+        <h2 class="text-xl font-bold mb-4 text-gray-700">
+            <i class="fas fa-book mr-2 text-indigo-500"></i> Notes by Course
+        </h2>
+
+        {% for course in courses %}
+        <div class="mb-4">
+            <h3 class="font-semibold text-lg text-gray-800">{{ course.name }}</h3>
+            <ul class="ml-4 list-disc">
+                {% for note in notes %}
+                    {% if note.course_id == course.id %}
+                    <li class="mb-1">
+                        {{ note.content }}
+                        {% if note.file_path %}
+                        - <a class="text-blue-500 underline" href="{{ url_for('uploaded_file', filename=note.file_path) }}">Download</a>
+                        {% endif %}
+                    </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Coursework Section -->
+    <div class="bg-white p-6 rounded-xl shadow-md">
+        <h2 class="text-xl font-bold mb-4 text-gray-700">
+            <i class="fas fa-tasks mr-2 text-green-500"></i> Coursework
+        </h2>
+
+        <form method="POST" class="space-y-3 mb-4">
+            <input type="text" name="title" placeholder="Coursework" class="w-full p-2 border rounded">
+            <input type="date" name="deadline" class="w-full p-2 border rounded">
+            <select name="course_id" class="w-full p-2 border rounded">
+                {% for course in courses %}
+                <option value="{{ course.id }}">{{ course.name }}</option>
+                {% endfor %}
+            </select>
+            <button class="bg-indigo-600 text-white px-4 py-2 rounded">Add Reminder</button>
+        </form>
+
+        <ul>
+        {% for cw in coursework %}
+            <li class="mb-2 p-2 border rounded flex justify-between">
+                <span>{{ cw.title }}</span>
+                <span class="text-sm text-gray-500">Due: {{ cw.deadline }}</span>
+            </li>
+        {% endfor %}
+        </ul>
+
+    </div>
+
+</div>
+
+{% endblock %}

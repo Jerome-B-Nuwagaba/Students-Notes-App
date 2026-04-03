@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+    <!-- Add Course -->
+    <div class="bg-white p-6 rounded-xl shadow-md">
+        <h2 class="text-xl font-bold mb-4 text-gray-700">
+            <i class="fas fa-plus-circle mr-2 text-green-500"></i> Add Course Unit
+        </h2>
+        <form method="POST" class="space-y-3">
+            <input type="text" name="course_name" placeholder="Course name" class="w-full p-2 border rounded">
+            <button class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Add</button>
+        </form>
+    </div>
+
+    <!-- Courses -->
+    <div class="bg-white p-6 rounded-xl shadow-md">
+        <h2 class="text-xl font-bold mb-4 text-gray-700">
+            <i class="fas fa-book-open mr-2 text-indigo-500"></i> Courses
+        </h2>
+
+        {% for course in courses %}
+        <div class="mb-4 p-4 border rounded-lg hover:shadow-md transition">
+            <h3 class="font-semibold text-lg text-gray-800">{{ course.name }}</h3>
+
+            <!-- Add Note -->
+            <form method="POST" class="mt-2 space-y-2">
+                <input type="hidden" name="course_id" value="{{ course.id }}">
+                <textarea name="note_content" placeholder="Write notes" class="w-full p-2 border rounded"></textarea>
+                <button class="bg-blue-500 text-white px-3 py-1 rounded">Add Note</button>
+            </form>
+
+            <!-- Upload -->
+            <form method="POST" enctype="multipart/form-data" class="mt-2">
+                <input type="hidden" name="course_id" value="{{ course.id }}">
+                <input type="file" name="file" class="mb-2">
+                <button class="bg-green-500 text-white px-3 py-1 rounded">Upload</button>
+            </form>
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}
