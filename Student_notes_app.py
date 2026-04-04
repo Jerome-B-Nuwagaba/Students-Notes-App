@@ -278,8 +278,3 @@ if __name__ == '__main__':
 {% endblock %}
 """
 
-# =========================
-# - Add delete/edit functionality
-# - Add authentication (login system)
-# - Use Bootstrap for better UI
-# - Add notifications for deadlines
